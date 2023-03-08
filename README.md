@@ -22,6 +22,7 @@ Server built with Node.js Express
 <!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
 
 2225 07 Mar 2023 - v.1.0.0 - First server commit
+2308 07 Mar 2023 - v.1.0.1 - Server is listening!
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
@@ -29,28 +30,24 @@ Server built with Node.js Express
 Time Estimates
 For each of the lab features, make an estimate of the time it will take you to complete the feature, and record your start and finish times for that feature:
 
-Name of feature: Set up React repository and API keys
-Estimate of time needed to complete: 30 min
-Start time: 2200
-Finish time: 2221
-Actual time needed to complete: 21 min
+Name of feature: Set up server repository
+Estimate of time needed to complete: 1 hour
+Start time: 2200 07 Mar 2023
+Finish time: 2309 07 Mar 2023
+Actual time needed to complete: 1:09
 
-Name of feature: Locations
+Name of feature: Weather (placeholder)
 Estimate of time needed to complete: 30 min
-Start time: 2224 06 Mar 2023
-Finish time: 2200 07 Mar 2023
-Actual time needed to complete: 2 hours
-
-Name of feature: Map
-Estimate of time needed to complete: 30 min
-Start time: NA
+Start time: 2309 07 Mar 2023
 Finish time: NA
-Actual time needed to complete: NA
+Actual time needed to complete: Incomplete
 
 Name of feature: Errors
-Estimate of time needed to complete: 1 hour
+Estimate of time needed to complete: 30 min
 Start time: NA
 Finish time: NA
 Actual time needed to complete: NA
+
+WRRC diagram incorporating LocationIQ API and Express server containing placeholder weather data
 
 ![WRRC Server Diagram](img/WRRC_server_diagram.png)
