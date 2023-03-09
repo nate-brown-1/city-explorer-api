@@ -35,11 +35,8 @@ app.get('/city', (request, response, next) => {
   try {
     let cityRequested = request.query.cityName;
     let cityResults = data.find(city => city.city_name === cityRequested);
-    let city = data.map(city => new City(city));
-    console.log(city);
-    // let forecast = cityObject.data.map(forecast => new Forecast(forecast));
-    // console.log(forecast);
-    response.send(city);
+    let forecast = cityResults.data.map(fc => new Forecast(fc));
+    response.send(forecast);
   } catch (error) {
     next(error);
   }
@@ -49,18 +46,12 @@ app.get('*', (request, response) => {
   response.send('The resource does not exist');
 });
 
-class City {
-  constructor(CityObject) {
-    this.city_name = CityObject.city_name;
-    this.lat = CityObject.lat;
-    this.lon = CityObject.lon;
-  }
-}
-
 class Forecast {
-  constructor(forecast) {
-    this.date = forecast.data.date;
-    this.description = forecast.data.description
+  constructor(ForecastObject) {
+    this.date = ForecastObject.valid_date;
+    this.low = ForecastObject.low_temp;
+    this.high = ForecastObject.high_temp;
+    this.description = ForecastObject.weather.description
   }
 }
 
