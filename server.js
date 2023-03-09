@@ -31,9 +31,14 @@ app.get('/', (request, response) => {
 });
 
 // request format: http://localhost:3001/city?cityName=Seattle
+// weatherbit request format: https://api.weatherbit.io/v2.0/current?lat=35.7796&lon=-78.6382&key=API_KEY&include=minutely
 app.get('/city', (request, response, next) => {
   try {
     let cityRequested = request.query.cityName;
+
+    // let weatherResults = async (e) => {
+    //   await axios.get(`request`);
+    // }
     let cityResults = data.find(city => city.city_name === cityRequested);
     let forecast = cityResults.data.map(fc => new Forecast(fc));
     response.send(forecast);
@@ -49,9 +54,7 @@ app.get('*', (request, response) => {
 class Forecast {
   constructor(ForecastObject) {
     this.date = ForecastObject.valid_date;
-    this.low = ForecastObject.low_temp;
-    this.high = ForecastObject.high_temp;
-    this.description = ForecastObject.weather.description
+    this.description = `low of ${ForecastObject.low_temp}, high of ${ForecastObject.high_temp}, with ${ForecastObject.weather.description.toLowerCase()}`
   }
 }
 
