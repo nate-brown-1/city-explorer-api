@@ -32,35 +32,39 @@ app.get('/', (request, response) => {
   response.send('Server is working!');
 });
 
-// request format: http://localhost:3001/city?cityLatLong
-app.get('/city', (request, response, next) => {
+// request format: http://localhost:3001/city?lat=$LAT&lon=$LON
+app.get('/city', async (request, response, next) => {
   try {
     let cityLat = request.query.lat;
     let cityLon = request.query.lon;
-    response.send(`request latitude is ${cityLat}`);
-    let cityResults = weatherbitRequest(cityLat, cityLon);
-    let forecast = cityResults.data.map(fc => new Forecast(fc));
+    let forecast = await weatherbitRequest(cityLat, cityLon);
+    console.log(forecast);
     response.send(forecast);
-  } catch (error) {
+    }
+  catch (error) {
     next(error);
   }
 });
 
-// weatherbit request format: https://api.weatherbit.io/v2.0/forecast/daily?lat=35.7796&lon=-78.6382&key=API_KEY
-let weatherbitRequestURL = 'https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${process.env.WEATHER_API_KEY}'
+// weatherbit request format: http://api.weatherbit.io/v2.0/forecast/daily?lat=35.7796&lon=-78.6382&key=API_KEY
+
+// let weatherbitRequestURL = 'http://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${process.env.WEATHER_API_KEY}'
 
 async function weatherbitRequest(lat, lon) {
   // local variable for weather request
   let w;
   try {
-    w = await axios.get({weatherbitRequestURL});
+    w = await axios.get(`http://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${process.env.WEATHER_API_KEY}`);
+    let forecast = w.data.data.map(fc => new Forecast(fc));
+    // console.log(forecast);
+    return Promise.resolve(forecast);
   } catch (e) {
-    w = e.msg;
+    w = error.msg;
+    console.log(w);
   }
-  return w;
 }
 
-const e = {
+let error = {
   msg: 'It looks like I picked the wrong week to quit amphetamines.'
 }
 
