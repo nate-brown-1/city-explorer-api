@@ -1,6 +1,5 @@
 'use strict';
 
-
 // express (server package)
 const express = require('express');
 
@@ -12,6 +11,9 @@ let data = require('./data/weather.json');
 
 // cross origin resource sharing = allows JavaScript clients
 const cors = require('cors');
+
+// use axios for remote API calls
+const axios = require('axios');
 
 // assign variable to express
 const app = express();
@@ -30,22 +32,37 @@ app.get('/', (request, response) => {
   response.send('Server is working!');
 });
 
-// request format: http://localhost:3001/city?cityName=Seattle
-// weatherbit request format: https://api.weatherbit.io/v2.0/current?lat=35.7796&lon=-78.6382&key=API_KEY&include=minutely
+// request format: http://localhost:3001/city?cityLatLong
 app.get('/city', (request, response, next) => {
   try {
-    let cityRequested = request.query.cityName;
-
-    // let weatherResults = async (e) => {
-    //   await axios.get(`request`);
-    // }
-    let cityResults = data.find(city => city.city_name === cityRequested);
+    let cityLat = request.query.lat;
+    let cityLon = request.query.lon;
+    response.send(`request latitude is ${cityLat}`);
+    let cityResults = weatherbitRequest(cityLat, cityLon);
     let forecast = cityResults.data.map(fc => new Forecast(fc));
     response.send(forecast);
   } catch (error) {
     next(error);
   }
 });
+
+// weatherbit request format: https://api.weatherbit.io/v2.0/forecast/daily?lat=35.7796&lon=-78.6382&key=API_KEY
+let weatherbitRequestURL = 'https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${process.env.WEATHER_API_KEY}'
+
+async function weatherbitRequest(lat, lon) {
+  // local variable for weather request
+  let w;
+  try {
+    w = await axios.get({weatherbitRequestURL});
+  } catch (e) {
+    w = e.msg;
+  }
+  return w;
+}
+
+const e = {
+  msg: 'It looks like I picked the wrong week to quit amphetamines.'
+}
 
 app.get('*', (request, response) => {
   response.send('The resource does not exist');
