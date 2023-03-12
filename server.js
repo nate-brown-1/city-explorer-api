@@ -59,13 +59,14 @@ async function weatherbitRequest(lat, lon) {
     // console.log(forecast);
     return Promise.resolve(forecast);
   } catch (e) {
-    w = error.msg;
+    w = error.message;
     console.log(w);
+    next (e); 
   }
 }
 
 let error = {
-  msg: 'It looks like I picked the wrong week to quit amphetamines.'
+  message: 'It looks like I picked the wrong week to quit amphetamines.'
 }
 
 app.get('*', (request, response) => {
