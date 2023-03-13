@@ -7,7 +7,7 @@ const express = require('express');
 require('dotenv').config();
 
 // weather data file, not from API
-let data = require('./data/weather.json');
+// let data = require('./data/weather.json');
 
 // cross origin resource sharing = allows JavaScript clients
 const cors = require('cors');
